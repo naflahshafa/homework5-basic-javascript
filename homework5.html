@@ -9,14 +9,16 @@
 </head>
 <body>
 
+<!-- Tombol Tab-->
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'Form')">Form</button>
   <button class="tablinks" onclick="openTab(event, 'List')">List</button>
 </div>
 
+<!-- Tab Konten: Formulir Registrasi-->
 <div id="Form" class="tabcontent">
     <section class="container">
-        <header><h1>Form</h1></header>
+        <header><h1>Formulir Registrasi</h1></header>
         <form action="#" class="form" onsubmit="return validateForm()">
             <div class="input-box">
                 <label for="fNama">Nama</label>
@@ -40,9 +42,10 @@
     </section>
 </div>
 
+<!-- Tab Konten: List Pendaftar -->
 <div id="List" class="tabcontent">
     <section class="container">
-        <header><h1>List</h1></header>
+        <header><h1>List Pendaftar</h1></header>
 
         <div>
             <table id="show" class="show">
@@ -66,6 +69,7 @@
 </div>
 
 <script>
+    // Function untuk membuka tab ketika diklik
     function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -80,6 +84,7 @@
         evt.currentTarget.className += " active";
     }
 
+    // Function menambah baris baru untuk menampilkan data yang sudah diinput dan disimpan
     var n = 0;
     var totalUangSangu = 0;
     var totalUmur = 0;
@@ -118,6 +123,7 @@
         }, 5000); // Pesan akan hilang setelah 3 detik
     }
 
+    // Function untuk mengecek kesesuaian data yang diinputkan pada form
     function validateForm() {
         var fNama = document.getElementById('fNama').value;
         var fUmur = parseInt(document.getElementById('fUmur').value);
@@ -142,7 +148,8 @@
         addRow();
         return false; // Hindari submit default
     }
-
+    
+    // Function untuk mengupdate resume setelah penambahan data baru dari input form
     function updateResume() {
         var averageUangSangu = totalUangSangu / n;
         var averageUmur = totalUmur / n;
