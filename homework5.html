@@ -7,68 +7,80 @@
     <!-- External CSS -->
     <link rel="stylesheet" href="gaya.css">
 </head>
+
 <body>
 
 <!-- Tombol Tab-->
 <div class="tab">
-  <button class="tablinks" onclick="openTab(event, 'Form')">Form</button>
-  <button class="tablinks" onclick="openTab(event, 'List')">List</button>
+    <button class="tablinks" onclick="openTab(event, 'Form')">Form</button>
+    <button class="tablinks" onclick="openTab(event, 'List')">List</button>
 </div>
 
 <!-- Tab Konten: Formulir Registrasi-->
 <div id="Form" class="tabcontent">
-    <section class="container">
-        <header><h1>Formulir Registrasi</h1></header>
-        <form action="#" class="form" onsubmit="return validateForm()">
-            <div class="input-box">
-                <label for="fNama">Nama</label>
-                <input type="text" id="fNama" name="fNama" placeholder="Masukkan minimal 10 karakter" required>
-            </div>
+    <header><h1>Formulir Registrasi</h1></header>
+    <form id="registrationForm" class="form">
+        <div class="input-box">
+            <label for="fNama">Nama</label>
+            <input type="text" id="fNama" name="fNama" placeholder="Masukkan minimal 10 karakter" required>
+        </div>
 
-            <div class="input-box">
-                <label for="fUmur">Umur</label>
-                <input type="number" id="fUmur" name="fUmur" placeholder="Minimal 25 tahun" required>
-            </div>
+        <div class="input-box">
+            <label for="fUmur">Umur</label>
+            <input type="number" id="fUmur" name="fUmur" placeholder="Minimal 25 tahun" required>
+        </div>
 
-            <div class="input-box">
-                <label for="fUangSangu">Uang Sangu</label>
-                <input type="number" id="fUangSangu" name="fUangSangu" placeholder="Minimal 100000 dan maksimal 1000000" required>
-            </div>
+        <div class="input-box">
+            <label for="fUangSangu">Uang Sangu</label>
+            <input type="number" id="fUangSangu" name="fUangSangu" placeholder="Minimal 100000 dan maksimal 1000000 rupiah" required>
+        </div>
 
-            <button type="submit">Submit</button>
-        </form>
-        <!-- Pesan pemberitahuan -->
-        <p id="notification" style="display: none; color: green;">Data berhasil disimpan.</p>
-    </section>
+        <button type="button" onclick="addRow()">Submit</button>
+    </form>
+    <!-- Pesan pemberitahuan -->
+    <p id="notification" style="display: none; color: green;">Data berhasil disimpan.</p>
 </div>
 
 <!-- Tab Konten: List Pendaftar -->
 <div id="List" class="tabcontent">
-    <section class="container">
-        <header><h1>List Pendaftar</h1></header>
+    <header><h1>List Pendaftar</h1></header>
 
-        <div>
-            <table id="show" class="show">
-                <thead>
-                    <tr>
-                        <th>Nama</th>
-                        <th>Umur</th>
-                        <th>Uang Sangu</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Data hasil inputan akan ditampilkan di sini -->
-                </tbody>
-            </table>
-        </div>
-        
-        <div id="resume">
-            <!-- Resume akan ditampilkan di sini -->
-        </div>
-    </section>
+    <div>
+        <table id="show" class="show">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Umur</th>
+                    <th>Uang Sangu</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data hasil inputan akan ditampilkan di sini -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="resume">
+        <!-- Resume akan ditampilkan di sini -->
+    </div>
 </div>
 
 <script>
+    // Penerapan enkapsulasi pada class Pendaftar yang membungkus data (properti: nama, umur, dan uangSangu) dan perilaku (method: isValid()) dalam satu unit.
+    // Class Pendaftar yang digunakan untuk membuat objek pendaftar dan memeriksa kesesuaian data yang diinputkan
+    class Pendaftar {
+        constructor(nama, umur, uangSangu) {
+            this.nama = nama;
+            this.umur = umur;
+            this.uangSangu = uangSangu;
+        }
+
+        // Method untuk memeriksa kesesuaian data yang diinputkan
+        isValid() {
+            return this.nama.length >= 10 && this.umur >= 25 && this.uangSangu >= 100000 && this.uangSangu <= 1000000;
+        }
+    }
+
     // Function untuk membuka tab ketika diklik
     function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
@@ -84,80 +96,66 @@
         evt.currentTarget.className += " active";
     }
 
+    // Array untuk menyimpan objek pendaftar
+    let pendaftar = [];
+
     // Function menambah baris baru untuk menampilkan data yang sudah diinput dan disimpan
-    var n = 0;
-    var totalUangSangu = 0;
-    var totalUmur = 0;
-
     function addRow() {
-        var fNama = document.getElementById('fNama').value;
-        var fUmur = parseInt(document.getElementById('fUmur').value);
-        var fUangSangu = parseInt(document.getElementById('fUangSangu').value);
+        const nama = document.getElementById('fNama').value;
+        const umur = parseInt(document.getElementById('fUmur').value);
+        const uangSangu = parseInt(document.getElementById('fUangSangu').value);
 
-        var table = document.getElementById("show").getElementsByTagName('tbody')[0];
-        var newRow = table.insertRow();
-        var cell1 = newRow.insertCell(0);
-        var cell2 = newRow.insertCell(1);
-        var cell3 = newRow.insertCell(2);
+        const pendaftarBaru = new Pendaftar(nama, umur, uangSangu);
 
-        cell1.innerHTML = fNama;
-        cell2.innerHTML = fUmur;
-        cell3.innerHTML = fUangSangu;
+        if (pendaftarBaru.isValid()) {
+            pendaftar.push(pendaftarBaru);
 
-        n++;
+            const table = document.getElementById("show").getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            const cell3 = newRow.insertCell(2);
 
-        totalUangSangu += fUangSangu;
-        totalUmur += fUmur;
+            cell1.innerHTML = pendaftarBaru.nama;
+            cell2.innerHTML = pendaftarBaru.umur;
+            cell3.innerHTML = pendaftarBaru.uangSangu;
 
-        // Kosongkan input setelah menambahkan baris
-        document.getElementById('fNama').value = '';
-        document.getElementById('fUmur').value = '';
-        document.getElementById('fUangSangu').value = '';
+            // Memanggil updateResume setelah menambah baris baru
+            updateResume();
 
-        updateResume(); // Panggil updateResume() setelah menambahkan baris
+            // Kosongkan input setelah menambahkan baris
+            document.getElementById('fNama').value = '';
+            document.getElementById('fUmur').value = '';
+            document.getElementById('fUangSangu').value = '';
 
-        // Tampilkan pesan pemberitahuan
-        document.getElementById('notification').style.display = 'block';
-        setTimeout(function() {
-            document.getElementById('notification').style.display = 'none';
-        }, 5000); // Pesan akan hilang setelah 3 detik
+            // Tampilkan pesan pemberitahuan
+            const notification = document.getElementById('notification');
+            notification.style.display = 'block';
+            setTimeout(function() {
+                notification.style.display = 'none';
+            }, 5000); // Pesan akan hilang setelah 5 detik
+        } else {
+            alert("Mohon masukkan data dengan benar: Nama (masukkan minimal 10 karakter), Umur (minimal 25 tahun), Uang Sangu (Minimal 100000 dan maksimal 1000000 rupiah).");
+        }
     }
 
-    // Function untuk mengecek kesesuaian data yang diinputkan pada form
-    function validateForm() {
-        var fNama = document.getElementById('fNama').value;
-        var fUmur = parseInt(document.getElementById('fUmur').value);
-        var fUangSangu = parseInt(document.getElementById('fUangSangu').value);
-
-        if (fNama.length < 10) {
-            alert("Nama harus memiliki minimal 10 karakter.");
-            return false;
-        }
-        
-        if (fUmur < 25) {
-            alert("Umur minimal 25 tahun.");
-            return false;
-        }
-
-        if (fUangSangu < 100000 || fUangSangu > 1000000) {
-            alert("Uang sangu minimal 100 ribu dan maksimal 1 juta rupiah.");
-            return false;
-        }
-
-        // Tambahkan data jika valid
-        addRow();
-        return false; // Hindari submit default
-    }
-    
     // Function untuk mengupdate resume setelah penambahan data baru dari input form
     function updateResume() {
-        var averageUangSangu = totalUangSangu / n;
-        var averageUmur = totalUmur / n;
+        const totalUangSangu = pendaftar.reduce((total, pendaftarBaru) => total + pendaftarBaru.uangSangu, 0);
+        const totalUmur = pendaftar.reduce((total, pendaftarBaru) => total + pendaftarBaru.umur, 0);
+        const averageUangSangu = totalUangSangu / pendaftar.length;
+        const averageUmur = totalUmur / pendaftar.length;
 
-        var resumeDiv = document.getElementById("resume");
+        const resumeDiv = document.getElementById("resume");
         resumeDiv.innerHTML = "Rata-rata pendaftar memiliki uang sangu sebesar " + averageUangSangu.toFixed(2) + " dengan rata-rata umur " + averageUmur.toFixed(2);
     }
+
+    // Menggunakan event.preventDefault() untuk mencegah halaman direfresh saat form disubmit
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+    });
+
 </script>
-   
+
 </body>
 </html>

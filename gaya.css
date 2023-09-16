@@ -3,14 +3,14 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-/* Style the tab */
+/* Class Tab */
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
 }
 
-/* Style the buttons inside the tab */
+/* Tombol di dalam tab */
 .tab button {
   background-color: inherit;
   float: left;
@@ -22,17 +22,17 @@ body {
   font-size: 17px;
 }
 
-/* Change background color of buttons on hover */
+/* Mengubah warna latar belakang tombol saat mengarahkan kursor */
 .tab button:hover {
   background-color: #ddd;
 }
 
-/* Create an active/current tablink class */
+/* Warna class tablink yang sedang aktif*/
 .tab button.active {
   background-color: #ccc;
 }
 
-/* Style the tab content */
+/* Class Tab Content */
 .tabcontent {
   display: none;
   padding: 6px 12px;
@@ -40,36 +40,31 @@ body {
   border-top: none;
 }
 
-.tabcontent .container {
-  position: relative;
-  width: 100%;
-  /* background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px); */
-  padding: 25px;
-  border-radius: 25px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1)
-}
-
-.tabcontent .container header {
+/* Header di dalam tab content */
+.tabcontent header {
     font-size: 1.5 rem;
     color: #333;
     font-weight: 500;
     text-align: center;
 }
 
-.tabcontent .container .form {
+/* Class Form di dalam tab content */
+.tabcontent .form {
     margin-top: 3opx;
 }
 
+/* Class Input box dalam class Form di dalam tab content */
 .tabcontent .form .input-box {
     width: 100%;
     margin-top: 20px;
 }
 
+/* Label dalam class Input box dalam class Form di dalam tab content */
 .tabcontent .input-box label {
     color: #333;
 }
 
+/* Input dalam class Input box dalam class Form di dalam tab content */
 .tabcontent .form .input-box input {
     position: relative;
     height: 50px;
@@ -80,10 +75,9 @@ body {
     margin-top: 8px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 0 15px;
-    /* background: transparent; */
 }
 
+/* Button dalam class Input box dalam class Form di dalam tab content */
 .tabcontent .form button {
     height: 55px;
     width: 100%;
@@ -96,26 +90,26 @@ body {
     background-color: lightcoral;
 }
 
+/* Tabel dalam class tab content */
 .tabcontent table {
     border-collapse: collapse;
     width: 100%;
     margin-top: 15px;
 }
 
+/* Baris header dan datanya dalam Tabel dalam class tab content */
 .tabcontent table th, td {
     border: 2px solid black;
     height: 50px;
-    text-align: left;
+    text-align: center;
     padding: 8px;
 }
 
-/* Menambahkan gaya CSS untuk tabel */
-table {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid #ddd;
+.tabcontent th {
+  background-color: coral;
 }
 
+/* Pemberian warna pada baris genap dalam Tabel dalam class tab content */
 .tabcontent table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: lightgray;
 }
